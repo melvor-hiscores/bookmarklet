@@ -9,7 +9,7 @@ function extractSkills() {
         /* Reached a key we are interested in */
         if (KEYS.includes(allVars[i])) {
             /* Add to our JSON */
-            dataJson[allVars[i]] = getItem(allVars[i]);
+            dataJson[allVars[i]] = getItem(key + allVars[i]);
         }
     }
 
@@ -20,11 +20,11 @@ function extractSkills() {
 
 function sendToHiscoresAPI(username, b64JsonString) {
     $.ajax({
-        url: 'https://l9ahyalvt7.execute-api.us-east-1.amazonaws.com/prod/users/jadedtdt',
+        url: 'https://l9ahyalvt7.execute-api.us-east-1.amazonaws.com/prod/users/' + username,
         type: 'POST',
         async: true,
         data: JSON.stringify({
-            "data" : "test"
+            "data" : b64JsonString
         }),
         success: function(data) {
             console.log('Updated hiscores for user: jadedtdt');
@@ -34,6 +34,6 @@ function sendToHiscoresAPI(username, b64JsonString) {
 
 function main() {
     let [ username, data ] = extractSkills();
-    sendToHiscoresAPI('jadedtdt', 'melvor test');
+    sendToHiscoresAPI(username, data);
 }
 main();
