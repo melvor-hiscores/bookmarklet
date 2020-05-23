@@ -172,9 +172,30 @@
         });
     }
 
+    // contributed by Toaxt - adds a notification once the scores are updated
+    const updateNotify = () => {
+        $.notify({
+            message: '<img class="notification-img" src="assets/media/main/changelog_header.svg" height="32px"><span class="badge badge-success">HiScores data uploaded!</span>'
+        }, {
+            type: 'light',
+            placement: {
+                from: 'bottom',
+                align: 'center'
+            },
+            delay: 1000,
+            newest_on_top: true,
+            animate: {
+                enter: 'animated fadeInUp',
+                exit: 'animated fadeOut'
+            },
+            template: '<div data-notify="container" class="col-12 col-md-2 text-center notify-event" role="alert"><span data-notify="message">{2}</span><div class="progress" data-notify="progressbar"><div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div></div><a href="{3}" target="{4}" data-notify="url"></a></div>'
+        });
+    }
+
     function main() {
         let [ username, data ] = packageJson(extractGp(), extractSkills());
         sendToHiscoresAPI(username, data);
+        updateNotify();
     }
     main();
 }());
